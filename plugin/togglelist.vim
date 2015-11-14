@@ -60,6 +60,8 @@ function! ToggleQuickfixList()
   for bufnum in map(filter(split(s:GetBufferList(), '\n'), 'v:val =~ "Quickfix List"'), 'str2nr(matchstr(v:val, "\\d\\+"))') 
     if bufwinnr(bufnum) != -1
       cclose
+      wincmd p
+      exec "normal!\<C-w>="
       return
     endif
   endfor
@@ -68,9 +70,6 @@ function! ToggleQuickfixList()
     exec(g:toggle_list_copen_command)
   else
     copen
-  endif
-  if winnr() != winnr
-    wincmd p
   endif
 endfunction
 
